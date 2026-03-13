@@ -9,9 +9,11 @@ WATCHLIST = [
 "TSLA","SMCI","NFLX","LULU","SHOP"
 ]
 
-def scan_all(data):
+def scan_all(symbols):
+    data = download_data(symbols)
+
     results = []
-    for symbol in WATCHLIST:
+    for symbol in symbols:
 
         df = data[symbol]
 
@@ -67,8 +69,8 @@ def scan_all(data):
 
     return results
 
-def download_data():
-    tickers = " ".join(WATCHLIST)
+def download_data(symbols):
+    tickers = " ".join(symbols)
 
     df = yf.download(
         tickers,
@@ -79,8 +81,7 @@ def download_data():
     )
     return df
 
-data = download_data()
-results = scan_all(data)
+results = scan_all(symbols=WATCHLIST)
 
 df = pd.DataFrame(results)
 print("\nMomentum Pullback Scanner\n")
